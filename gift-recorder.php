@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Gift Recorder
  * Plugin URI:        https://wonkasoft.com/gift-recorder
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Wonkasoft's Gift Recorder is a plugin that was designed for a spiritual gifts assessment test which is a helpful tool that will help discover his or her specific gifts.
  * Version:           1.0.0
  * Author:            Wonkasoft
  * Author URI:        https://wonkasoft.com

@@ -156,6 +156,8 @@ class Gift_Recorder {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'gift_recorder_add_action_links' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'gift_recorder_show_settings_page' );
 
 	}
 

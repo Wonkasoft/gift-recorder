@@ -73,6 +73,13 @@ class Gift_Recorder_Admin {
 		 * class.
 		 */
 
+		// Check to see if bootstrap style is already enqueue before setting the enqueue
+		$style = 'bootstrap';
+		if( ! wp_style_is( $style, 'enqueued' ) &&  ! wp_style_is( $style, 'done' ) ) {
+	    //queue up your bootstrap
+			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css'), array(), '4.0.0', 'all');
+		}
+
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -98,6 +105,37 @@ class Gift_Recorder_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, false );
 
+		// Check to see if bootstrap js is already enqueue before setting the enqueue
+		$bootstrapjs = 'bootstrap-js';
+		if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
+		 	// enqueue bootstrap js
+			wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
+		} 
+		
+
+	}
+
+		// Active the Admin / Settings page
+	public function gift_recorder_show_settings_page() {
+		add_menu_page(
+			'Gift Recorder',
+			'Gift Recorder',
+			'manage_options',
+			'gift-recorder-admin-display',
+			array( $this,'gift_recorder_display_admin_page' ),
+			plugins_url( "/img/gift-recorder-logo.svg", __FILE__ ),
+			100
+			);
+	}
+
+	// To display the setting page for Gift Recorder
+	public function gift_recorder_display_admin_page() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-display.php';
+	}
+
+	// Create the action links on the plugins page
+	public function gift_recorder_add_action_links() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
 	}
 
 }
