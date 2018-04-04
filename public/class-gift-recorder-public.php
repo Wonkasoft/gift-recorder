@@ -27,9 +27,9 @@ class Gift_Recorder_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string    $GIFT_RECORDER    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private $GIFT_RECORDER;
 
 	/**
 	 * The version of this plugin.
@@ -44,12 +44,12 @@ class Gift_Recorder_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
+	 * @param      string    $GIFT_RECORDER       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $GIFT_RECORDER, $version ) {
 
-		$this->plugin_name = $plugin_name;
+		$this->GIFT_RECORDER = $GIFT_RECORDER;
 		$this->version = $version;
 
 	}
@@ -73,7 +73,7 @@ class Gift_Recorder_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class Gift_Recorder_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
