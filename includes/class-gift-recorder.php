@@ -44,9 +44,9 @@ class Gift_Recorder {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string    $GIFT_RECORDER    The string used to uniquely identify this plugin.
 	 */
-	protected $plugin_name;
+	protected $GIFT_RECORDER;
 
 	/**
 	 * The current version of the plugin.
@@ -67,12 +67,12 @@ class Gift_Recorder {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'GIFT_RECORDER_VERSION' ) ) {
+			$this->version = GIFT_RECORDER_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'gift-recorder';
+		$this->GIFT_RECORDER = 'gift-recorder';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -152,7 +152,7 @@ class Gift_Recorder {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Gift_Recorder_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Gift_Recorder_Admin( $this->get_GIFT_RECORDER(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -170,7 +170,7 @@ class Gift_Recorder {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Gift_Recorder_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Gift_Recorder_Public( $this->get_GIFT_RECORDER(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -193,8 +193,8 @@ class Gift_Recorder {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
+	public function get_GIFT_RECORDER() {
+		return $this->GIFT_RECORDER;
 	}
 
 	/**

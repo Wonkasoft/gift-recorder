@@ -1,0 +1,5 @@
+.DS_Store
+.phpintel
+phpcs.phar
+phpcbf.phar
+*.swp

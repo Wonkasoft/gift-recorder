@@ -35,7 +35,12 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+
+
+define( 'GIFT_RECORDER_PATH', plugin_dir_path( __FILE__ ) );
+define( 'GIFT_RECORDER_NAME', plugin_basename( dirname( __FILE__ ) ) );
+define( 'GIFT_RECORDER_BASENAME', plugin_basename( __FILE__ ) );
+define( 'GIFT_RECORDER_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.

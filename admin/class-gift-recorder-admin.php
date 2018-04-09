@@ -27,9 +27,9 @@ class Gift_Recorder_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string    $GIFT_RECORDER    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private $GIFT_RECORDER;
 
 	/**
 	 * The version of this plugin.
@@ -44,12 +44,12 @@ class Gift_Recorder_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
+	 * @param      string    $GIFT_RECORDER       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $GIFT_RECORDER, $version ) {
 
-		$this->plugin_name = $plugin_name;
+		$this->GIFT_RECORDER = $GIFT_RECORDER;
 		$this->version = $version;
 
 	}
@@ -59,7 +59,7 @@ class Gift_Recorder_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $page ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -76,12 +76,13 @@ class Gift_Recorder_Admin {
 		// Check to see if bootstrap style is already enqueue before setting the enqueue
 		$style = 'bootstrap';
 		if( ! wp_style_is( $style, 'enqueued' ) &&  ! wp_style_is( $style, 'done' ) ) {
-	    //queue up your bootstrap
+			// Check page to load bootstrapjs only on settings page
+			if ( $page == 'toplevel_page_gift-recorder-admin-display' ) {
+	    // Enqueue bootstrap CSS
 			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css'), array(), '4.0.0', 'all');
+			}
 		}
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -89,8 +90,7 @@ class Gift_Recorder_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
-
+	public function enqueue_scripts( $page ) {
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -103,28 +103,74 @@ class Gift_Recorder_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, false );
 
 		// Check to see if bootstrap js is already enqueue before setting the enqueue
 		$bootstrapjs = 'bootstrap-js';
 		if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
-		 	// enqueue bootstrap js
-			wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
+			// Check page to load bootstrapjs only on settings page
+		 	if ( $page == 'toplevel_page_gift-recorder-admin-display' ) {
+			 	// Enqueue bootstrap js
+				wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
+		 	}
 		} 
-		
-
 	}
 
 		// Active the Admin / Settings page
 	public function gift_recorder_show_settings_page() {
 		add_menu_page(
-			'Gift Recorder',
+			'Options',
 			'Gift Recorder',
 			'manage_options',
 			'gift-recorder-admin-display',
 			array( $this,'gift_recorder_display_admin_page' ),
 			plugins_url( "/img/gift-recorder-logo.svg", __FILE__ ),
 			100
+			);
+		add_submenu_page(
+			'gift-recorder-admin-display',
+			'Settings',
+			'Settings',
+			'manage_options',
+			'gift-recorder-admin-display',
+			array( $this, 'gift_recorder_display_admin_page' ),
+			100
+		);
+		add_submenu_page( 
+			'gift-recorder-admin-display', 
+			'Questions', 
+			'Questions', 
+			'manage_options', 
+			'gift-recorder-admin-questions', 
+			array( $this, 'gift_recorder_display_admin_questions'),
+			'101'
+			);
+		add_submenu_page( 
+			'gift-recorder-admin-display', 
+			'User Manger', 
+			'User Manger', 
+			'manage_options', 
+			'gift-recorder-admin-user-manager', 
+			array( $this, 'gift_recorder_display_admin_user_manger'),
+			'102'
+			);
+		add_submenu_page( 
+			'gift-recorder-admin-display', 
+			'Reports', 
+			'Reports', 
+			'manage_options', 
+			'gift-recorder-admin-reports', 
+			array( $this, 'gift_recorder_display_admin_reports'),
+			'103'
+			);
+		add_submenu_page( 
+			'gift-recorder-admin-display', 
+			'Integrations', 
+			'Integrations', 
+			'manage_options', 
+			'gift-recorder-admin-integration', 
+			array( $this, 'gift_recorder_display_admin_integrations'),
+			'104'
 			);
 	}
 
@@ -133,9 +179,28 @@ class Gift_Recorder_Admin {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-display.php';
 	}
 
+	// To display the questions page for Gift Recorder
+	public function gift_recorder_display_admin_questions() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-questions.php';
+	}
+
+	// To display the user manger page for Gift Recorder
+	public function gift_recorder_display_admin_user_manger() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-user-manager.php';
+	}
+
+	// To display the reports page for Gift Recorder
+	public function gift_recorder_display_admin_reports() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-reports.php';
+	}
+
+	// To display the integrations page for Gift Recorder
+	public function gift_recorder_display_admin_integrations() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-integrations.php';
+	}
+
 	// Create the action links on the plugins page
 	public function gift_recorder_add_action_links() {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
 	}
-
 }
