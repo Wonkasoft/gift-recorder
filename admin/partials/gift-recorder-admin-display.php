@@ -20,7 +20,7 @@
     </div> <!-- /col -->
   </div> <!-- /row -->
   <div class="row">
-    <div class="col col-md-6">
+    <div class="col col-md-6 input-panel">
       <div class="form-group row">
   <label for="text-input" class="col-2 col-form-label">Full Name</label>
   <div class="col-10">
@@ -101,6 +101,6 @@
     <input class="form-control btn btn-secondary" type="button" name="reset" value="Reset" id="reset">
   </div>
 </div>
-    </div> <!-- /row -->
   </div> <!-- /col -->
+    </div> <!-- /row -->
 </div> <!-- /container-fluid -->
