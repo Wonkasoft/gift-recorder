@@ -47,7 +47,7 @@ define( 'GIFT_RECORDER_VERSION', '1.0.0' );
  * This action is documented in includes/class-gift-recorder-activator.php
  */
 function activate_gift_recorder() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-gift-recorder-activator.php';
+	require_once GIFT_RECORDER_PATH . 'includes/class-gift-recorder-activator.php';
 	Gift_Recorder_Activator::activate();
 }
 
@@ -56,7 +56,7 @@ function activate_gift_recorder() {
  * This action is documented in includes/class-gift-recorder-deactivator.php
  */
 function deactivate_gift_recorder() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-gift-recorder-deactivator.php';
+	require_once GIFT_RECORDER_PATH . 'includes/class-gift-recorder-deactivator.php';
 	Gift_Recorder_Deactivator::deactivate();
 }
 
@@ -67,7 +67,7 @@ register_deactivation_hook( __FILE__, 'deactivate_gift_recorder' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-gift-recorder.php';
+require GIFT_RECORDER_PATH . 'includes/class-gift-recorder.php';
 
 /**
  * Begins execution of the plugin.

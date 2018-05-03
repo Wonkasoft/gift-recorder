@@ -29,7 +29,8 @@ add_filter( 'plugin_action_links_'. GIFT_RECORDER_BASENAME, 'gift_recorder_add_s
  * @param [type] $links [description]
  */
 function gift_recorder_add_settings_link_filter( $links ) { 
- $link_addon = '<a href="admin.php?page=gift-recorder-admin-display" target="_self">Settings</a>';
+	global $gift_recorder_options_page;
+ $link_addon = '<a href="' . menu_page_url( $gift_recorder_options_page, 0 ) . '" target="_self">Settings</a>';
  array_unshift( $links, $link_addon ); 
  $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank"><img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/gift-recorder-logo-2.svg" . '" style="width: 30px; height: 20px; display: inline-block; vertical-align: text-top; float: none;" /></a>';
  return $links; 
@@ -42,13 +43,14 @@ add_filter( 'plugin_row_meta', 'gift_recorder_add_description_link_filter', 10, 
 
 /**
  * [gift_recorder_add_description_link_filter description]
- * @param  [type] $links [description]
+ * @param  [array] $links [description]
  * @param  [type] $file  [description]
  * @return [type]        [description]
  */
 function gift_recorder_add_description_link_filter( $links, $file ) {
+	global $gift_recorder_options_page;
   if ( strpos($file, 'gift-recorder.php') !== false ) {
-    $links[] = '<a href="admin.php?page=gift-recorder-admin-display" target="_self">Settings</a>';
+    $links[] = '<a href="' . menu_page_url( $gift_recorder_options_page, 0 ) . '" target="_self">Settings</a>';
     $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank">Donate <img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/gift-recorder-logo-2.svg" . '" style="width: 30px; height: 20px; display: inline-block; vertical-align: text-top;" /></a>';
   }
   return $links; 

@@ -117,7 +117,10 @@ class Gift_Recorder_Admin {
 	}
 
 		// Active the Admin / Settings page
-	public function gift_recorder_show_settings_page() {
+	public function gift_recorder_settings_page() {
+
+		global $gift_recorder_options_page;
+		$gift_recorder_options_page = 'gift-recorder-admin-display';
 		add_menu_page(
 			'Options',
 			'Gift Recorder',
