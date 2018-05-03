@@ -126,7 +126,7 @@ class Gift_Recorder_Admin {
 			'manage_options',
 			'gift-recorder-admin-display',
 			array( $this,'gift_recorder_display_admin_page' ),
-			plugins_url( "/img/gift-recorder-logo.svg", __FILE__ ),
+			GIFT_RECORDER_IMG_PATH . "/gift-recorder-logo.svg",
 			100
 			);
 		add_submenu_page(
@@ -204,5 +204,10 @@ class Gift_Recorder_Admin {
 	// Create the action links on the plugins page
 	public function gift_recorder_add_action_links() {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
+	}
+
+	// Create the custom post types
+	public function gift_recorder_custom_post_types() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-custom-post-types.php';
 	}
 }

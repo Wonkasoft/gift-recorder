@@ -35,10 +35,10 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-
 define( 'GIFT_RECORDER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GIFT_RECORDER_NAME', plugin_basename( dirname( __FILE__ ) ) );
 define( 'GIFT_RECORDER_BASENAME', plugin_basename( __FILE__ ) );
+define( 'GIFT_RECORDER_IMG_PATH', plugins_url( GIFT_RECORDER_NAME . '/admin/img' ) );
 define( 'GIFT_RECORDER_VERSION', '1.0.0' );
 
 /**
