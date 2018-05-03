@@ -19,7 +19,6 @@
  * @author     Wonkasoft <support@wonkasoft.com>
  */
 class Gift_Recorder_Activator {
-
 	/**
 	 * Short Description. (use period)
 	 *
