@@ -31,28 +31,28 @@ class Gift_Recorder_Activator {
 
         global $wpdb;
 
-        $version = get_option( 'gift_recorder_database_version', '1.0' );
         $charset_collate = $wpdb->get_charset_collate();
         $table_name =$wpdb->prefix . "giftrecorder";
 
-        if ( $wpdb->get_var('SHOW TABLES LIKE ' . $table_name) != $table_name ) {
-          $sql = 'CREATE TABLE ' .$table_name . '(
-            id INTEGER(10) UNSIGNED AUTO_INCREMENT,
-            entry_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            first_name VARCHAR(150),
-            list_name VARCHAR(150),
-            email VARCHAR(150),
-            phone VARCHAR(150),
-            city VARCHAR(150),
-            state VARCHAR(16),
-            your_gift VARCHAR(50),
+        if ( $wpdb->get_var('SHOW TABLES LIKE ' . $table_name) != $table_name ) :
+          $sql = 'CREATE TABLE {$table_name} (
+            id INT(10) NOT NULL AUTO_INCREMENT,
+            entry_date DEFAULT "0000-00-00 00:00:00" NOT NULL,
+            first_name VARCHAR(150) NOT NULL,
+            list_name VARCHAR(150) NOT NULL,
+            email VARCHAR(150) NOT NULL,
+            phone VARCHAR(150) NOT NULL,
+            city VARCHAR(150) NOT NULL,
+            state VARCHAR(16) NOT NULL,
+            your_gift VARCHAR(50) NOT NULL,
             PRIMARY KEY (id) 
-            ) $charset_collate;';
+            ) 
+            COLLATE {$charset_collate}';
 
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
 
             update_option( 'gift_recorder_database_version', '1.0' );
-        }
+        endif;
     }
 }
