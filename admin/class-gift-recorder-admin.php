@@ -149,4 +149,9 @@ class Gift_Recorder_Admin {
 	public function gift_recorder_add_action_links() {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
 	}
+
+	// Create the custom post types
+	public function gift_recorder_custom_post_types() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-custom-post-types.php';
+	}
 }

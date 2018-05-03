@@ -17,7 +17,7 @@ add_menu_page(
   'manage_options',
   'gift-recorder-admin-display',
   array( $this,'gift_recorder_display_admin_page' ),
-  plugins_url('/admin/img/gift-recorder-logo.svg', GIFT_RECORDER_PATH ),
+  GIFT_RECORDER_IMG_PATH . "/gift-recorder-logo.svg",
   100
 );
 add_submenu_page(
