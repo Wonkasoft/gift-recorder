@@ -10,28 +10,103 @@
  */
 
 function Gift_Rec_Member_Meta_Boxes() {
-	global $wpdb;
-	$args = array(
-		'id' => '',
-		'entry_date' => '',
-		'first_name' => '',
-		'last_name' => '',
-		'email' => '',
-		'phone' => '',
-		'state' => '',
-		'your_gift' => '',
-	);
-	add_meta_box( 'member-name', __( 'Member Name', 'text_domain' ), 'Gift_Rec_Member_Meta_Box_layouts', 'Gift_Rec_Members', 'normal', 'high', $args );
-}
-
-function Gift_Rec_Member_Meta_Box_layouts( $data ) {
-	var_dump($data);
+	add_meta_box( 'member-name', __( 'Member Information', 'text_domain' ), 'Gift_Rec_Member_Meta_Box_layouts', 'Gift_Rec_Members', 'normal', 'high' );
 
 	return;
 }
 
-add_settings_section( 'grec-full-name-section', 'Member Name', null, 'Gift_Rec_Members' );
-add_settings_field( 'grec-full-name-section', 'Member Name', 'grec-member-name-field', 'Gift_Rec_Members', );
+function Gift_Rec_Member_Meta_Box_layouts( $post ) {
+	?>
+	<table>
+		<thead style="text-align: left;">
+			<tr>
+				<th>
+					<label for="post_title"><h3>Full Name</h3></label>
+				</th>
+				<th>
+					<label for="post_date"><h3>Last Modified Date</h3></label>
+				</th>
+				<th>
+					<label for="post_title"><h3>Email</h3></label>
+				</th>
+				<th>
+					<label for="post_date"><h3>Phone Number</h3></label>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<input type="text" name="post_title" size="35" id="title" value="<?php echo $post->post_title; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+				<td>
+						<input type="text" name="post_date" size="25" id="date" value="<?php echo $post->post_date; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+				<td>
+					<input type="email" name="post_email" size="35" id="email" value="<?php echo $post->post_email; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+				<td>
+						<input type="phone" name="post_phone" size="15" id="phone" value="<?php echo $post->post_phone; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+			</tr>
+			<tr style="text-align: left;">
+				<th>
+					<label for="post_city"><h3>City</h3></label>
+				</th>
+				<th>
+					<label for="post_state"><h3>State</h3></label>
+				</th>
+				<th>
+					<label for="post_gift"><h3>Member's Gift</h3></label>
+				</th>
+			</tr>
+			<tr>
+				<td>
+						<input type="text" name="post_city" size="25" id="city" value="<?php echo $post->post_city; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+				<td>
+					<input type="text" name="post_state" size="25" id="state" value="<?php echo $post->post_state; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+				<td>
+						<input type="text" name="post_gift" size="20" id="gift" value="<?php echo $post->post_gift; ?>" spellcheck="true" autocomplete="off" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<?php
+	return;
+}
+
+add_action( 'save_post', 'post_type_save_data', 11, 3 );
+
+function post_type_save_data( $post_ID, $post, $update ) {
+	global $wpdb;
+	$table_name = $wpdb->prefix . "giftrecorder";
+	$name_array = explode( ' ', $post->post_title );
+	$first_name = current( $name_array );
+	$last_name = end( $name_array );
+	$wpdb->insert(
+		$table_name,
+		array(
+			'id' 				=> $post_ID,
+			'entry_date' => $post->post_date,
+      'first_name' => $first_name,
+      'last_name' => $last_name,
+      'email' 		=> '2',
+      'phone' 		=> '2',
+      'city' 			=> '2',
+      'state' 		=> '2',
+      'your_gift' => '2'
+		),
+		array (
+			'%s',
+			'%d'
+		)
+	);
+
+	return;
+}
 
 /**
  * Registering Custom Post types
@@ -41,7 +116,7 @@ $labels = array(
 	'name'                  => _x( 'Members', 'Post Type General Name', 'text_domain' ),
 	'singular_name'         => _x( 'Member', 'Post Type Singular Name', 'text_domain' ),
 	'menu_name'             => __( 'Gift Recorder', 'text_domain' ),
-	'name_admin_bar'        => __( 'Gift_Recorder', 'text_domain' ),
+	'name_admin_bar'        => __( 'Gift Recorder', 'text_domain' ),
 	'archives'              => __( 'Member Archives', 'text_domain' ),
 	'attributes'            => __( 'Member Attributes', 'text_domain' ),
 	'parent_item_colon'     => __( 'Parent Member:', 'text_domain' ),
@@ -87,6 +162,11 @@ $args = array(
 	'query_var'             => 'GrecMember',
 	'capability_type'       => 'post',
 	'show_in_rest'          => true,
-	'register_meta_box_cb'  => 'Gift_Rec_Member_Meta_Boxes',
+	'register_meta_box_cb'  => 'Gift_Rec_Member_Meta_Boxes'
 );
 register_post_type( 'Gift_Rec_Members', $args );
+/**
+ * Define Custom Post Type
+ */
+define( 'GIFT_REC_MEMBERS', 'Gift_Rec_Members' );
+return;
