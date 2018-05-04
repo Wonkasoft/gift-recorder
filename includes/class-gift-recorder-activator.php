@@ -36,9 +36,9 @@ class Gift_Recorder_Activator {
         if ( $wpdb->get_var('SHOW TABLES LIKE ' . $table_name) != $table_name ) :
           $sql = 'CREATE TABLE {$table_name} (
             id INT(10) NOT NULL AUTO_INCREMENT,
-            entry_date DEFAULT "0000-00-00 00:00:00" NOT NULL,
+            entry_date DEFAULT TIMESTAMP NOT NULL,
             first_name VARCHAR(150) NOT NULL,
-            list_name VARCHAR(150) NOT NULL,
+            last_name VARCHAR(150) NOT NULL,
             email VARCHAR(150) NOT NULL,
             phone VARCHAR(150) NOT NULL,
             city VARCHAR(150) NOT NULL,
