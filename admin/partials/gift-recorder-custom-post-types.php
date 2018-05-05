@@ -10,102 +10,233 @@
  */
 
 function Gift_Rec_Member_Meta_Boxes() {
-	add_meta_box( 'member-name', __( 'Member Information', 'text_domain' ), 'Gift_Rec_Member_Meta_Box_layouts', 'Gift_Rec_Members', 'normal', 'high' );
+	if ( !class_exists('GIFT_REC_FIELDS') ) :
+		/**
+		 * The Class of custom fields for the custom post types of Gift Recorder.
+		 *
+		 * @link       https://wonkasoft.com
+		 * @since      1.0.0
+		 *
+		 * @package    Gift_Recorder
+		 * @subpackage Gift_Recorder/admin
+		 */
+		class GIFT_REC_FIELDS {
+			/**
+			 * The prefix for these fields.
+			 *
+			 * @since    1.0.0
+			 * @access   private
+			 * @var      string    $grec_prefix    The prefix for these fields.
+			 */
+			private $grec_prefix;
 
-	return;
-}
+			/**
+			 * The custom post type of this plugin.
+			 *
+			 * @since    1.0.0
+			 * @access   private
+			 * @var      string    $grec_post_type    The custom post type of this plugin.
+			 */
+			private $grec_post_types;
 
-function Gift_Rec_Member_Meta_Box_layouts( $post ) {
-	?>
-	<table>
-		<thead style="text-align: left;">
-			<tr>
-				<th>
-					<label for="post_title"><h3>Full Name</h3></label>
-				</th>
-				<th>
-					<label for="post_date"><h3>Last Modified Date</h3></label>
-				</th>
-				<th>
-					<label for="post_title"><h3>Email</h3></label>
-				</th>
-				<th>
-					<label for="post_date"><h3>Phone Number</h3></label>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					<input type="text" name="post_title" size="35" id="title" value="<?php echo $post->post_title; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-				<td>
-						<input type="text" name="post_date" size="25" id="date" value="<?php echo $post->post_date; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-				<td>
-					<input type="email" name="post_email" size="35" id="email" value="<?php echo $post->post_email; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-				<td>
-						<input type="phone" name="post_phone" size="15" id="phone" value="<?php echo $post->post_phone; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-			</tr>
-			<tr style="text-align: left;">
-				<th>
-					<label for="post_city"><h3>City</h3></label>
-				</th>
-				<th>
-					<label for="post_state"><h3>State</h3></label>
-				</th>
-				<th>
-					<label for="post_gift"><h3>Member's Gift</h3></label>
-				</th>
-			</tr>
-			<tr>
-				<td>
-						<input type="text" name="post_city" size="25" id="city" value="<?php echo $post->post_city; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-				<td>
-					<input type="text" name="post_state" size="25" id="state" value="<?php echo $post->post_state; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-				<td>
-						<input type="text" name="post_gift" size="20" id="gift" value="<?php echo $post->post_gift; ?>" spellcheck="true" autocomplete="off" />
-				</td>
-			</tr>
-		</tbody>
-	</table>
+			/**
+			 * The version of this plugin.
+			 *
+			 * @since    1.0.0
+			 * @access   private
+			 * @var      string    $grec_post_type    The custom post type of this plugin.
+			 */
+			private $grec_fields = array( 
+				array(
+					"name"          => "post_full_name",
+					"title"         => "Full Name",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_date",
+					"title"         => "Last Modified",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_email",
+					"title"         => "Email",
+					"description"   => "",
+					"type"          => "email",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_phone",
+					"title"         => "Phone",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_city",
+					"title"         => "City",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_state",
+					"title"         => "State",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				),
+				array(
+					"name"          => "post_gift",
+					"title"         => "Member's Gift",
+					"description"   => "",
+					"type"          => "text",
+					"scope"         => array( "post" ),
+					"capability"    => "edit_post"
+				)
+			);
 
-	<?php
-	return;
-}
+			/**
+			 * Initialize the class and set its properties.
+			 *
+			 * @since    1.0.0
+			 */
+			public function __construct() {
 
-add_action( 'save_post', 'post_type_save_data', 11, 3 );
+				$this->grec_prefix = '_grec_custom_';
+				$this->grec_post_types = array( 'Gift_Rec_Members' );
 
-function post_type_save_data( $post_ID, $post, $update ) {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "giftrecorder";
-	$name_array = explode( ' ', $post->post_title );
-	$first_name = current( $name_array );
-	$last_name = end( $name_array );
-	$wpdb->insert(
-		$table_name,
-		array(
-			'id' 				=> $post_ID,
-			'entry_date' => $post->post_date,
-      'first_name' => $first_name,
-      'last_name' => $last_name,
-      'email' 		=> '2',
-      'phone' 		=> '2',
-      'city' 			=> '2',
-      'state' 		=> '2',
-      'your_gift' => '2'
-		),
-		array (
-			'%s',
-			'%d'
-		)
-	);
+				add_action( 'admin_menu', array( $this, 'create_grec_fields') );
+				add_action( 'save_post', array( $this, 'post_type_save_data'), 10, 3 );
+			}
 
-	return;
+			public function create_grec_fields() {
+				if ( function_exists( 'add_meta_box' ) ) :
+					foreach ( $this->grec_post_types as $post_type ) :
+						add_meta_box( 'member-info-fields', __( 'Member Information', 'text_domain' ), array( $this, 'Gift_Rec_Member_Meta_Box_layouts' ), $post_type, 'normal', 'high' );
+					endforeach;
+				endif;
+			} // end create_grec_fields
+
+			public function Gift_Rec_Member_Meta_Box_layouts() {
+				global $post;
+				var_dump($post);
+				?>
+				<div class="table-wrap">
+					<?php wp_nonce_field( 'member-info-fields', 'member-info-fields_wpnonce', false, true );
+					foreach ( $this->grec_fields as $grec_field ) :
+						// Check Scope
+						$scope = $grec_field['scope'];
+						$output = false;
+						foreach ( $scope as $scopeItem ) :
+							switch ( $scopeItem ) {
+								default: {
+									if ( $post->post_type == $scopeItem )
+										$output = true;
+									break;
+								}
+							}
+							if ( $output ) break;
+						endforeach;
+						// Check capability
+						if ( !current_user_can( $grec_field['capability'], $post->ID ) ) :
+							$output = false;
+						endif;
+                    	// Output if allowed
+						if ( $output ) : ?>
+						<div class="form-field form-required">
+							<?php
+							switch ( $grec_field[ 'type' ] ) {
+								case "checkbox": {
+                                    // Checkbox
+									echo '<label for="' . $this->prefix . $grec_field[ 'name' ] . '" style="display:inline;"><b>' . $grec_field[ 'title' ] . '</b></label>';
+									echo '<input type="checkbox" name="' . $this->prefix . $grec_field['name'] . '" id="' . $this->prefix . $grec_field['name'] . '" value="yes"';
+									if ( get_post_meta( $post->ID, $this->prefix . $grec_field['name'], true ) == "yes" )
+										echo ' checked="checked"';
+									echo '" style="width: auto;" />';
+									break;
+								}
+								case "textarea":
+								case "wysiwyg": {
+                                    // Text area
+									echo '<label for="' . $this->prefix . $grec_field[ 'name' ] .'"><b>' . $grec_field[ 'title' ] . '</b></label>';
+									echo '<textarea name="' . $this->prefix . $grec_field[ 'name' ] . '" id="' . $this->prefix . $grec_field[ 'name' ] . '" columns="30" rows="3">' . htmlspecialchars( get_post_meta( $post->ID, $this->prefix . $grec_field[ 'name' ], true ) ) . '</textarea>';
+                                    // WYSIWYG
+									if ( $grec_field[ 'type' ] == "wysiwyg" ) { ?>
+									<script type="text/javascript">
+										jQuery( document ).ready( function() {
+											jQuery( "<?php echo $this->prefix . $grec_field[ 'name' ]; ?>" ).addClass( "mceEditor" );
+											if ( typeof( tinyMCE ) == "object" &amp;&amp; typeof( tinyMCE.execCommand ) == "function" ) {
+												tinyMCE.execCommand( "mceAddControl", false, "<?php echo $this->prefix . $grec_field[ 'name' ]; ?>" );
+											}
+										});
+									</script>
+									<?php }
+									break;
+								}
+								default: {
+                                    // Plain text field
+									echo '<label for="' . $this->prefix . $grec_field[ 'name' ] .'"><b>' . $grec_field[ 'title' ] . '</b></label>';
+									echo '<input type="text" name="' . $this->prefix . $grec_field[ 'name' ] . '" id="' . $this->prefix . $grec_field[ 'name' ] . '" value="' . htmlspecialchars( get_post_meta( $post->ID, $this->prefix . $grec_field[ 'name' ], true ) ) . '" />';
+									break;
+								}
+							}
+							?>
+							<?php if ( $grec_field[ 'description' ] ) echo '<p>' . $grec_field[ 'description' ] . '</p>'; ?>
+						</div>
+						<?php
+						endif;
+					endforeach;
+					?>	
+				</div>
+			<?php
+			return;
+		} // end Gift_Rec_Member_Meta_Box_layouts
+
+		public function post_type_save_data( $post_ID, $post, $update ) {
+			global $wpdb;
+			$table_name = $wpdb->prefix . "giftrecorder";
+			$name_array = explode( ' ', $post->post_title );
+			$first_name = current( $name_array );
+			$last_name = end( $name_array );
+			$wpdb->insert(
+				$table_name,
+				array(
+					'id' 		=> $post_ID,
+					'entry_date' => $post->post_date,
+					'first_name' => $first_name,
+					'last_name' => $last_name,
+					'email' 	=> '2',
+					'phone' 	=> '2',
+					'city' 		=> '2',
+					'state' 	=> '2',
+					'your_gift' => '2'
+				),
+				array (
+					'%s',
+					'%d'
+				)
+			);
+
+			return;
+		} // end post_type_save_data
+	} // end class GIFT_REC_FIELDS
+endif; // End if class exists statement
+
+// if ( class_exists( 'GIFT_REC_FIELDS' ) ) {
+// 	$gift_rec_fields_object = new GIFT_REC_FIELDS();
+// }
+
+return;
 }
 
 /**
@@ -145,7 +276,7 @@ $args = array(
 	'label'                 => __( 'Member', 'text_domain' ),
 	'description'           => __( 'Member information pages.', 'text_domain' ),
 	'labels'                => $labels,
-	'supports'              => array( 'thumbnail', 'comments', 'revisions', 'post-formats' ),
+	'supports'              => array( 'title', 'thumbnail', 'comments', 'revisions', 'post-formats' ),
 	'taxonomies'            => array( 'category', 'post_tag' ),
 	'hierarchical'          => false,
 	'public'                => true,
