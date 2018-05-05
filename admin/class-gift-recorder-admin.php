@@ -115,36 +115,6 @@ class Gift_Recorder_Admin {
 		} 
 	}
 
-		// Active the Admin / Settings page
-	public function gift_recorder_settings_page() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-menu-setup.php';
-	}
-
-	// To display the setting page for Gift Recorder
-	public function gift_recorder_display_admin_page() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-display.php';
-	}
-
-	// To display the questions page for Gift Recorder
-	public function gift_recorder_display_admin_questions() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-questions.php';
-	}
-
-	// To display the user manger page for Gift Recorder
-	public function gift_recorder_display_admin_user_manger() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-user-manager.php';
-	}
-
-	// To display the reports page for Gift Recorder
-	public function gift_recorder_display_admin_reports() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-reports.php';
-	}
-
-	// To display the integrations page for Gift Recorder
-	public function gift_recorder_display_admin_integrations() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-integrations.php';
-	}
-
 	// Create the action links on the plugins page
 	public function gift_recorder_add_action_links() {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
@@ -153,71 +123,5 @@ class Gift_Recorder_Admin {
 	// Create the custom post types
 	public function gift_recorder_custom_post_types() {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-custom-post-types.php';
-	}
-
-	public function Gift_Rec_Member_Meta_Boxes() {
-		add_meta_box( 'member-info-fields', __( 'Member Information', 'text_domain' ), 'Gift_Rec_Member_Meta_Box_layouts', 'Gift_Rec_Members', 'normal', 'high' );
-
-		return;
-	}
-
-	public function Gift_Rec_Member_Meta_Box_layouts( $post ) {
-		?>
-		<div class="table-wrap">
-			<table>
-				<thead style="text-align: left;">
-					<tr>
-						<th>
-							<label for="post_title"><h3>Full Name</h3></label>
-						</th>
-						<th>
-							<label for="post_date"><h3>Last Modified</h3></label>
-						</th>
-						<th>
-							<label for="post_title"><h3>Email</h3></label>
-						</th>
-						<th>
-							<label for="post_date"><h3>Phone Number</h3></label>
-						</th>
-						<th>
-							<label for="post_city"><h3>City</h3></label>
-						</th>
-						<th>
-							<label for="post_state"><h3>State</h3></label>
-						</th>
-						<th>
-							<label for="post_gift"><h3>Member's Gift</h3></label>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<input type="text" name="post_title" id="title" value="<?php echo $post->post_title; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="text" name="post_date" id="date" value="<?php echo $post->post_date; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="email" name="post_email" id="email" value="<?php echo $post->post_email; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="phone" name="post_phone" id="phone" value="<?php echo $post->post_phone; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="text" name="post_city" id="city" value="<?php echo $post->post_city; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="text" name="post_state" id="state" value="<?php echo $post->post_state; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-						<td>
-							<input type="text" name="post_gift" id="gift" value="<?php echo $post->post_gift; ?>" spellcheck="true" autocomplete="off" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<?php
-		return;
 	}
 }

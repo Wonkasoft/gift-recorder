@@ -16,15 +16,3 @@
 .post-type-gift_rec_members h3 {
 	font-size: 1.1rem;
 }
-
-.post-type-gift_rec_members .table-wrap {
-	text-align: center;
-}
-
-.post-type-gift_rec_members .table-wrap table {
-	margin: auto;
-}
-
-.post-type-gift_rec_members .table-wrap table th, .post-type-gift_rec_members .table-wrap table td {
-	padding: 0 8px;
-}
