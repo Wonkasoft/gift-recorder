@@ -47,7 +47,7 @@ $args = array(
 	'description'           => __( 'Member information pages.', 'text_domain' ),
 	'labels'                => $labels,
 	'supports'              => array( 'title', 'thumbnail', 'comments', 'revisions', 'post-formats' ),
-	'taxonomies'            => array( 'category', 'post_tag' ),
+	'taxonomies'            => array( 'category', 'post_tag', 'meta_data' ),
 	'hierarchical'          => false,
 	'public'                => true,
 	'show_ui'               => true,
@@ -68,5 +68,27 @@ register_post_type( 'Gift_Rec_Members', $args );
 /**
  * Define Custom Post Type
  */
-define( 'GIFT_REC_MEMBERS', 'Gift_Rec_Members' );
+define( 'GIFT_REC_MEMBERS', 'gift_rec_members' );
+
+// Add the custom columns to the book post type:
+add_filter( 'manage_gift_rec_members_posts_columns', 'set_custom_git_recorder_columns' );
+function set_custom_git_recorder_columns( $columns ) {
+
+    array_splice( $columns, 2, 0, $columns['member_info'] = 'Member Info' );
+
+    return $columns;
+}
+
+// Add the data to the custom columns for the book post type:
+add_action( 'manage_gift_rec_members_posts_custom_column' , 'custom_gift_rec_members_column', 10, 2 );
+function custom_gift_rec_members_column( $column, $post_id ) {
+    switch ( $column ) {
+
+        case 'member_info' :
+        			global $post;
+            	print_r( get_post_meta( $post->ID ) );
+            break;
+    }
+}
+
 return;
