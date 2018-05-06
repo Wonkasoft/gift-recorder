@@ -101,7 +101,7 @@ if ( !class_exists('GIFT_REC_FIELDS') ) :
 			 */
 			public function __construct() {
 
-				$this->grec_prefix = '_grec_custom_';
+				$this->grec_prefix = '_grec_';
 				$this->grec_post_types = array( 'gift_rec_members' );
 
 				add_action( 'admin_menu', array( &$this, 'create_grec_fields') );
@@ -221,6 +221,7 @@ if ( !class_exists('GIFT_REC_FIELDS') ) :
 						$value = $_POST[ $this->grec_prefix . $grec_field['name'] ];
             // Auto-paragraphs for any WYSIWYG
 						if ( $grec_field['type'] == "wysiwyg" ) $value = wpautop( $value );
+						
 						update_post_meta( $post_id, $this->grec_prefix . $grec_field[ 'name' ], $_POST[ $this->grec_prefix . $grec_field['name'] ] );
 
 						if ( $grec_field[ 'name' ] == 'post_full_name' ) :

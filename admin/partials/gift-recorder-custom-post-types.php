@@ -74,21 +74,70 @@ define( 'GIFT_REC_MEMBERS', 'gift_rec_members' );
 add_filter( 'manage_gift_rec_members_posts_columns', 'set_custom_git_recorder_columns' );
 function set_custom_git_recorder_columns( $columns ) {
 
-    array_splice( $columns, 2, 0, $columns['member_info'] = 'Member Info' );
+	$columns = array_slice( $columns, 0, 2, true ) + array( 'member_email' => 'Email','member_phone' => 'Phone','member_city' => 'City','member_state' => 'State','member_gift' => 'Gift',) + array_slice( $columns, 2, count( $columns ), true );
 
-    return $columns;
+	return $columns;
 }
 
 // Add the data to the custom columns for the book post type:
 add_action( 'manage_gift_rec_members_posts_custom_column' , 'custom_gift_rec_members_column', 10, 2 );
 function custom_gift_rec_members_column( $column, $post_id ) {
-    switch ( $column ) {
+	
+	global $post;
+	$meta_keys = get_post_custom_keys( $post->ID );
+	$meta_values = get_post_meta( $post->ID );
+	switch ( $column ) {
 
-        case 'member_info' :
-        			global $post;
-            	print_r( get_post_meta( $post->ID ) );
-            break;
-    }
+		case 'member_email' :
+		foreach ( $meta_keys as $key ) :
+			if ( $key == '_grec_post_email' ) :
+				?>
+				<span class="member-info"><?php echo $meta_values[$key][0]; ?></span>
+				<?php
+			endif;
+		endforeach;
+		break;
+
+		case 'member_phone' :
+		foreach ( $meta_keys as $key ) :
+			if ( $key == '_grec_post_phone' ) :
+				?>
+				<span class="member-info"><?php echo $meta_values[$key][0]; ?></span>
+				<?php
+			endif;
+		endforeach;
+		break;
+
+		case 'member_city' :
+		foreach ( $meta_keys as $key ) :
+			if ( $key == '_grec_post_city' ) :
+				?>
+				<span class="member-info"><?php echo $meta_values[$key][0]; ?></span>
+				<?php
+			endif;
+		endforeach;
+		break;
+
+		case 'member_state' :
+		foreach ( $meta_keys as $key ) :
+			if ( $key == '_grec_post_state' ) :
+				?>
+				<span class="member-info"><?php echo $meta_values[$key][0]; ?></span>
+				<?php
+			endif;
+		endforeach;
+		break;
+
+		case 'member_gift' :
+		foreach ( $meta_keys as $key ) :
+			if ( $key == '_grec_post_gift' ) :
+				?>
+				<span class="member-info"><?php echo $meta_values[$key][0]; ?></span>
+				<?php
+			endif;
+		endforeach;
+		break;
+	}
 }
 
 return;
