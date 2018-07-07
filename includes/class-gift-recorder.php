@@ -126,6 +126,11 @@ class Gift_Recorder {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-gift-recorder-public.php';
 
+		/**
+		 * The class responsible for defining all gift-recorder template files.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-gift-recorder-template-loader.php';
+
 		$this->loader = new Gift_Recorder_Loader();
 
 	}
