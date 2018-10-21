@@ -8,7 +8,8 @@
  * @package    Gift_Recorder
  * @subpackage Gift_Recorder/public
  */
-
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) die;
 /**
  * The public-facing functionality of the plugin.
  *
@@ -71,8 +72,15 @@ class Gift_Recorder_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'css/gift-recorder-public.css', array(), $this->version, 'all' );
+		$style = 'bootstrap';
+		if( ! wp_style_is( $style, 'enqueued' ) &&  ! wp_style_is( $style, 'done' ) ) {
+			// Check page to load bootstrapjs only on settings page
+			if ( is_page('spiritual-gifts-classes') ) {
+	    	// Enqueue bootstrap CSS
+			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', GIFT_RECORDER_URL . 'admin/css/bootstrap.min.css'), array(), '4.0.0', 'all');
+			}
+		}
+		wp_enqueue_style( $this->GIFT_RECORDER, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/gift-recorder-public.css'), array(), $this->version, 'all' );
 
 	}
 
@@ -94,8 +102,16 @@ class Gift_Recorder_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-public.js', array( 'jquery' ), $this->version, false );
+		// Check to see if bootstrap js is already enqueue before setting the enqueue
+		$bootstrapjs = 'bootstrap-js';
+		if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
+			// Check page to load bootstrapjs only on settings page
+		 	if ( is_page('spiritual-gifts-classes') ) {
+			 	// Enqueue bootstrap js
+				wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', GIFT_RECORDER_URL . 'admin/js/bootstrap.min.js'), array( 'jquery' ), '4.0.0', true );
+		 	}
+		} 
+		wp_enqueue_script( $this->GIFT_RECORDER, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/gift-recorder-public.js'), array( 'jquery' ), $this->version, true );
 
 	}
 

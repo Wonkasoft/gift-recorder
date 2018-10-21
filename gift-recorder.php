@@ -35,6 +35,7 @@ if ( ! defined( 'WPINC' ) ) die;
 
 define( 'GIFT_RECORDER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GIFT_RECORDER_NAME', plugin_basename( dirname( __FILE__ ) ) );
+define( 'GIFT_RECORDER_URL', plugins_url( GIFT_RECORDER_NAME . '/' ) );
 define( 'GIFT_RECORDER_BASENAME', plugin_basename( __FILE__ ) );
 define( 'GIFT_RECORDER_IMG_PATH', plugins_url( GIFT_RECORDER_NAME . '/admin/img' ) );
 define( 'GIFT_RECORDER_VERSION', '1.0.0' );
