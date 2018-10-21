@@ -29,7 +29,6 @@ class Gift_Recorder_Activator {
 	public static function activate() {
 
         global $wpdb;
-        define( 'GIFT_RECORDER_OPTIONS', $wpdb->prefix . "giftrecorder" );
         $charset_collate = $wpdb->get_charset_collate();
         $table_name =$wpdb->prefix . "giftrecorder";
 

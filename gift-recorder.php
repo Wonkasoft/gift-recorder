@@ -25,9 +25,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+if ( ! defined( 'WPINC' ) ) die;
 
 /**
  * Currently plugin version.
@@ -46,10 +44,8 @@ define( 'GIFT_RECORDER_VERSION', '1.0.0' );
  * This action is documented in includes/class-gift-recorder-activator.php
  */
 function activate_gift_recorder() {
-	ob_start();
 	require_once GIFT_RECORDER_PATH . 'includes/class-gift-recorder-activator.php';
 	Gift_Recorder_Activator::activate();
-	ob_clean();
 }
 
 /**
@@ -57,10 +53,8 @@ function activate_gift_recorder() {
  * This action is documented in includes/class-gift-recorder-deactivator.php
  */
 function deactivate_gift_recorder() {
-	ob_start();
 	require_once GIFT_RECORDER_PATH . 'includes/class-gift-recorder-deactivator.php';
 	Gift_Recorder_Deactivator::deactivate();
-	ob_clean();
 }
 
 register_activation_hook( __FILE__, 'activate_gift_recorder' );
