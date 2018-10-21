@@ -29,29 +29,51 @@ class Gift_Recorder_Activator {
 	public static function activate() {
 
         global $wpdb;
-        define( 'GIFT_RECORDER_OPTIONS', $wpdb->prefix . "giftrecorder" );
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name =$wpdb->prefix . "giftrecorder";
+        $table_name = $wpdb->prefix . "giftrecorder";
+        $installed_ver = get_option( 'gift_recorder_database_version' );
 
-        if ( $wpdb->get_var('SHOW TABLES LIKE ' . $table_name) != $table_name ) :
-          $sql = 'CREATE TABLE {$table_name} (
+        if ( $installed_ver != GIFT_RECORDER_VERSION ) :
+          $sql = "CREATE TABLE $table_name (
             id INT(10) NOT NULL AUTO_INCREMENT,
-            entry_date DEFAULT TIMESTAMP NOT NULL,
+            entry_date TIMESTAMP NOT NULL,
             first_name VARCHAR(150) NOT NULL,
             last_name VARCHAR(150) NOT NULL,
             email VARCHAR(150) NOT NULL,
-            phone VARCHAR(150) NOT NULL,
+            address LONGTEXT NOT NULL,
             city VARCHAR(150) NOT NULL,
             state VARCHAR(16) NOT NULL,
-            your_gift VARCHAR(50) NOT NULL,
+            zip VARCHAR(16) NOT NULL,
+            phone VARCHAR(150) NOT NULL,
+            birth_date DATE NOT NULL,
+            your_gift LONGTEXT NOT NULL,
+            score LONGTEXT NOT NULL,
             PRIMARY KEY (id) 
-            ) 
-            COLLATE {$charset_collate}';
-
+            )$charset_collate";
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
+            update_option( 'gift_recorder_database_version', GIFT_RECORDER_VERSION );
+        else: 
+            $sql = "CREATE TABLE $table_name (
+              id INT(10) NOT NULL AUTO_INCREMENT,
+              entry_date TIMESTAMP NOT NULL,
+              first_name VARCHAR(150) NOT NULL,
+              last_name VARCHAR(150) NOT NULL,
+              email VARCHAR(150) NOT NULL,
+              address LONGTEXT NOT NULL,
+              city VARCHAR(150) NOT NULL,
+              state VARCHAR(16) NOT NULL,
+              zip VARCHAR(16) NOT NULL,
+              phone VARCHAR(150) NOT NULL,
+              birth_date DATE NOT NULL,
+              your_gift LONGTEXT NOT NULL,
+              score LONGTEXT NOT NULL,
+              PRIMARY KEY (id) 
+              )$charset_collate";
 
-            update_option( 'gift_recorder_database_version', '1.0' );
+              require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+              dbDelta( $sql );
+              update_option( 'gift_recorder_database_version', GIFT_RECORDER_VERSION );
         endif;
 
         // create post object
