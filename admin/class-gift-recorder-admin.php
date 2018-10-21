@@ -76,7 +76,7 @@ class Gift_Recorder_Admin {
 		$style = 'bootstrap';
 		if( ! wp_style_is( $style, 'enqueued' ) &&  ! wp_style_is( $style, 'done' ) ) {
 			// Check page to load bootstrapjs only on settings page
-			if ( $page == 'post.php' ) {
+			if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
 	    	// Enqueue bootstrap CSS
 			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css'), array(), '4.0.0', 'all');
 			}
@@ -108,7 +108,7 @@ class Gift_Recorder_Admin {
 		$bootstrapjs = 'bootstrap-js';
 		if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
 			// Check page to load bootstrapjs only on settings page
-		 	if ( $page == 'toplevel_page_gift-recorder-admin-display' ) {
+		 	if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
 			 	// Enqueue bootstrap js
 				wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
 		 	}
@@ -120,8 +120,16 @@ class Gift_Recorder_Admin {
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
 	}
 
-	// Create the custom post types
-	public function gift_recorder_custom_post_types() {
-		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-custom-post-types.php';
+	public function gift_recorder_admin_pages() {
+		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-pages.php';
+	}
+
+	/**
+	* [gift_recorder_settings_page This function displays the admin settings page]
+	*
+	* @since 1.0.0
+	*/
+	public function gift_recorder_settings_page() {
+	  include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-display.php';
 	}
 }

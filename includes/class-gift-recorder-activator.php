@@ -53,5 +53,23 @@ class Gift_Recorder_Activator {
 
             update_option( 'gift_recorder_database_version', '1.0' );
         endif;
+
+        // create post object
+        $page = array(
+          'post_title'  => __( 'Spiritual Gifts Classes' ),
+          'post_status' => 'publish',
+          'post_author' => $current_user->ID,
+          'post_type'   => 'page',
+        );
+
+        if ( get_page_by_title( 'Spiritual Gifts Classes' ) ) {
+            
+            // insert the post into the database
+            wp_update_post( $page );
+        } else {
+            
+            // insert the post into the database
+            wp_insert_post( $page );
+        }
     }
 }

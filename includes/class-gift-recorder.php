@@ -116,11 +116,6 @@ class Gift_Recorder {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-gift-recorder-admin.php';
 
 		/**
-		 * The class responsible for defining all custom post type fields.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-gift-recorder-custom-post-type-fields.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -166,7 +161,7 @@ class Gift_Recorder {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'gift_recorder_add_action_links' );
-		$this->loader->add_action( 'init', $plugin_admin, 'gift_recorder_custom_post_types' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'gift_recorder_admin_pages' );
 
 	}
 
