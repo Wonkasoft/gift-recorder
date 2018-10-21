@@ -63,8 +63,10 @@ $args = array(
 	'query_var'             => 'GrecMember',
 	'capability_type'       => 'post',
 	'show_in_rest'          => true,
+	'rewrite'				=> array( 'slug' => 'gift-rec-members'),
 );
 register_post_type( 'Gift_Rec_Members', $args );
+
 /**
  * Define Custom Post Type
  */
@@ -138,6 +140,27 @@ function custom_gift_rec_members_column( $column, $post_id ) {
 		endforeach;
 		break;
 	}
+	return;
 }
 
-return;
+function load_gift_recorder_template( $template ) {
+    global $post;
+
+	if ( $post->post_type == 'Gift_Rec_Members') {
+
+		if ( strpos( $template, 'page' ) ) {
+			$template = locate_template( array( "gift-recorder/Gift_Rec_Members-page.php" ) );
+
+			if ( $template == '' ) {
+				$template = GIFT_RECORDER_PATH . "templates/Gift_Rec_Members-page.php";
+			}
+
+    		return $template;
+		}
+
+	}
+
+    return $template;
+}
+
+add_filter( 'page_template', 'load_rsc_videos_template' );

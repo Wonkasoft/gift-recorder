@@ -31,7 +31,7 @@ add_filter( 'plugin_action_links_'. GIFT_RECORDER_BASENAME, 'gift_recorder_add_s
 function gift_recorder_add_settings_link_filter( $links ) { 
  $link_addon = '<a href="edit.php?post_type=gift_rec_members" target="_self">Settings</a>';
  array_unshift( $links, $link_addon ); 
- $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank"><img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/gift-recorder-logo-2.svg" . '" style="width: 30px; height: 20px; display: inline-block; vertical-align: text-top; float: none;" /></a>';
+ $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank"><img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/wonka-logo.svg" . '" style="width: 20px; height: 20px; display: inline-block; vertical-align: text-top; float: none;" /></a>';
  return $links; 
 }
 
@@ -49,7 +49,7 @@ add_filter( 'plugin_row_meta', 'gift_recorder_add_description_link_filter', 10, 
 function gift_recorder_add_description_link_filter( $links, $file ) {
   if ( strpos($file, 'gift-recorder.php') !== false ) {
     $links[] = '<a href="edit.php?post_type=gift_rec_members" target="_self">Settings</a>';
-    $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank">Donate <img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/gift-recorder-logo-2.svg" . '" style="width: 30px; height: 20px; display: inline-block; vertical-align: text-top;" /></a>';
+    $links[] = '<a href="https://paypal.me/Wonkasoft" target="_blank">Donate <img src="' . plugin_dir_url( "gift-recorder" ) . "gift-recorder/admin/img/wonka-logo.svg" . '" style="width: 20px; height: 20px; display: inline-block; vertical-align: text-top;" /></a>';
   }
   return $links; 
 }
