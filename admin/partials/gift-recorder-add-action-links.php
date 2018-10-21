@@ -38,7 +38,7 @@ add_filter( 'plugin_row_meta', 'gift_recorder_add_description_link_filter', 10, 
 
 function gift_recorder_add_description_link_filter( $links, $file ) {
   global $gift_recorder_page;
-  if ( strpos($file, 'wonkasoft-logout.php') !== false ) {
+  if ( strpos($file, 'gift-recorder.php') !== false ) {
     $links[] = '<a href="' . menu_page_url( $gift_recorder_page, 0 ) . '" target="_self">Settings</a>';
     $links[] = '<a href="https://paypal.me/Wonkasoft" target="blank">Donate <img src="' . plugins_url( '../img/wonka-logo.svg', __FILE__ ) . '" style="width: 20px; height: 20px; display: inline-block;
     vertical-align: text-top;" /></a>';
