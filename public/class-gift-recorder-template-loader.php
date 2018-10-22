@@ -29,15 +29,20 @@ function load_gift_recorder_template( $template ) {
 add_filter( 'page_template', 'load_gift_recorder_template' );
 
 function gift_recorder_template_class( $classes ) {
-	$output = array();
-	foreach ($classes as $class) :
-		if ( $class == 'page-template-default') :
-			$class = 'gift-recorder-template';
-		endif;
-		array_push($output, $class );
-	endforeach;
+	global $post;
+	if ( $post->post_name == 'spiritual-gifts-classes') :
+			
+		$output = array();
+		foreach ($classes as $class) :
+			if ( $class == 'page-template-default') :
+				$class = 'gift-recorder-template';
+			endif;
+			array_push($output, $class );
+		endforeach;
+		return $output;
+	endif;
 
-	return $output;
+	return $classes;
 }
 
 add_filter( 'body_class', 'gift_recorder_template_class' );
