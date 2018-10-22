@@ -116,6 +116,11 @@ class Gift_Recorder {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-gift-recorder-admin.php';
 
 		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/gift-recorder-settings-ajax.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */

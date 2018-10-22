@@ -26,9 +26,9 @@ class Gift_Recorder_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $GIFT_RECORDER    The ID of this plugin.
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $GIFT_RECORDER;
+	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
@@ -43,12 +43,12 @@ class Gift_Recorder_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $GIFT_RECORDER       The name of this plugin.
+	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $GIFT_RECORDER, $version ) {
+	public function __construct( $plugin_name, $version ) {
 
-		$this->GIFT_RECORDER = $GIFT_RECORDER;
+		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
 	}
@@ -81,7 +81,7 @@ class Gift_Recorder_Admin {
 			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css'), array(), '4.0.0', 'all');
 			}
 		}
-		wp_enqueue_style( $this->GIFT_RECORDER, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css'), array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css'), array(), $this->version, 'all' );
 	}
 
 	/**
@@ -102,15 +102,25 @@ class Gift_Recorder_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->GIFT_RECORDER, plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, false );
 
 		// Check to see if bootstrap js is already enqueue before setting the enqueue
 		$bootstrapjs = 'bootstrap-js';
-		if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
-			// Check page to load bootstrapjs only on settings page
-		 	if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
+		// Check page to load bootstrapjs only on settings page
+	 	if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
+			
+			wp_enqueue_script( $this->plugin_name. '-admin-js', plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, true );
+			
+			// Creating a localize script for the ajax features
+			wp_localize_script( $this->plugin_name . '-admin-js', 'GIFT_RECORDER_KIT', array(
+			'security' => wp_create_nonce( 'gift-recorder-number' ),
+			'success' => 'Your options were successfully updated.',
+			'failure' => 'There was an error updating your options.'
+			));
+
+			if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
 			 	// Enqueue bootstrap js
 				wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
+
 		 	}
 		} 
 	}
