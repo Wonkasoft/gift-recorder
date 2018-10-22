@@ -59,28 +59,15 @@ $results = $wpdb->get_results( "SELECT * FROM $table_name limit 10" ); // Query 
                   <th scope="col">Score</th>
                 </tr>
               </thead>
-              <tbody>
-                <?php 
-                foreach ($results as $record) {
-                ?>
-                <tr>
-                  <th scope="row"><?php echo $record->id; ?></th>
-                  <td><?php echo $record->first_name; ?></td>
-                  <td><?php echo $record->last_name; ?></td>
-                  <td><?php echo $record->email; ?></td>
-                  <td><?php echo $record->phone; ?></td>
-                  <td><?php echo $record->address; ?></td>
-                  <td><?php echo $record->city; ?></td>
-                  <td><?php echo $record->state; ?></td>
-                  <td><?php echo $record->zip; ?></td>
-                  <td><?php echo $record->your_gift; ?></td>
-                  <td><?php echo $record->score; ?></td>
-                </tr>
-                <?php
-                }
-                ?>
+              <tbody id="members-table">
               </tbody>
             </table>
+            <div class="form-group row justify-content-center">
+              <label for="number-records" class="col-2 col-form-label text-center">Number of records</label>
+              <div class="col-1">
+                <input class="form-control text-center" type="number" value="10" id="member-number-records">
+              </div>
+            </div>
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
@@ -149,30 +136,16 @@ $results = $wpdb->get_results( "SELECT * FROM $table_name limit 10" ); // Query 
                   <th scope="col">Edit/Delete</th>
                 </tr>
               </thead>
-              <tbody>
-                <?php 
-                foreach ($results as $record) {
-                ?>
-                <tr>
-                  <th scope="row"><?php echo $record->id; ?></th>
-                  <td><?php echo $record->first_name; ?></td>
-                  <td><?php echo $record->last_name; ?></td>
-                  <td><?php echo $record->email; ?></td>
-                  <td><?php echo $record->phone; ?></td>
-                  <td><?php echo $record->address; ?></td>
-                  <td><?php echo $record->city; ?></td>
-                  <td><?php echo $record->state; ?></td>
-                  <td><?php echo $record->zip; ?></td>
-                  <td><?php echo $record->your_gift; ?></td>
-                  <td><?php echo $record->score; ?></td>
-                  <td><a href="#" class="btn btn-sm btn-secondary">Edit</a> <a href="#" class="btn btn-sm btn-danger">Delete</a></td>
-                </tr>
-                <?php
-                }
-                ?>
-
+              <tbody id="manage-users-table">
+             
               </tbody>
             </table>
+            <div class="form-group row text-center">
+              <label for="number-records" class="col-1 col-form-label">Number of records</label>
+              <div class="col-1">
+                <input class="form-control" type="number" value="42" id="manage-user-number-records">
+              </div>
+            </div>
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
