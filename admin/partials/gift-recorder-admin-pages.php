@@ -23,17 +23,15 @@
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) die;
 
-
-
-  // Active the Admin / Settings page
-
 /**
 * This will check for Wonkasoft Tools Menu, if not found it will make it.
 */
 if ( empty ( $GLOBALS['admin_page_hooks']['wonkasoft_menu'] ) ) {
 
   global $gift_recorder_page;
+  
   $gift_recorder_page = 'wonkasoft_menu';
+  
   add_menu_page(
     'Wonkasoft',
     'Wonkasoft Tools',
@@ -59,7 +57,9 @@ if ( empty ( $GLOBALS['admin_page_hooks']['wonkasoft_menu'] ) ) {
 * This creates option page in the settings tab of admin menu
 */
 global $gift_recorder_page;
+
 $gift_recorder_page = 'gift_recorder_settings_page';
+
 add_submenu_page(
   'wonkasoft_menu',
   'Gift Recorder',

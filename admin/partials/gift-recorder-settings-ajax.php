@@ -19,6 +19,7 @@
  * @subpackage Gift_Recorder/admin
  * @author     Wonkasoft <support@wonkasoft.com>
  */
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) die;
 
@@ -26,10 +27,14 @@ if ( ! defined( 'WPINC' ) ) die;
 add_action( 'wp_ajax_queryData', 'pull_all_data', 10, 1 );
 
 function pull_all_data() {
-  // Nonce checking
+   
+   // Nonce checking
    if ( !check_ajax_referer( 'gift-recorder-number', 'security' ) ) {
+   
     return wp_send_json_error( 'Invalid Nonce' );
+   
    }
+  
   global $wpdb;
   $charset_collate = $wpdb->get_charset_collate();
   $table_name =$wpdb->prefix . "giftrecorder";
@@ -38,4 +43,5 @@ function pull_all_data() {
   $results = json_encode($results);
   wp_send_json_success($results);
   wp_die();
+
 }

@@ -74,14 +74,22 @@ class Gift_Recorder_Admin {
 		
 		// Check to see if bootstrap style is already enqueue before setting the enqueue
 		$style = 'bootstrap';
+		
 		if( ! wp_style_is( $style, 'enqueued' ) &&  ! wp_style_is( $style, 'done' ) ) {
+		
 			// Check page to load bootstrapjs only on settings page
+		
 			if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
-	    	// Enqueue bootstrap CSS
+	  
+	   	// Enqueue bootstrap CSS
 			wp_enqueue_style( $style, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css'), array(), '4.0.0', 'all');
+		
 			}
+		
 		}
+		
 		wp_enqueue_style( $this->plugin_name, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'css/gift-recorder-admin.css'), array(), $this->version, 'all' );
+	
 	}
 
 	/**
@@ -105,7 +113,9 @@ class Gift_Recorder_Admin {
 
 		// Check to see if bootstrap js is already enqueue before setting the enqueue
 		$bootstrapjs = 'bootstrap-js';
+	
 		// Check page to load bootstrapjs only on settings page
+	
 	 	if ( $page == 'toplevel_page_wonkasoft_menu' ||  $page == 'tools_page_gift_recorder_settings_page') {
 			
 			wp_enqueue_script( $this->plugin_name. '-admin-js', plugin_dir_url( __FILE__ ) . 'js/gift-recorder-admin.js', array( 'jquery' ), $this->version, true );
@@ -118,20 +128,27 @@ class Gift_Recorder_Admin {
 			));
 
 			if ( ! wp_script_is( $bootstrapjs, 'enqueued' ) && ! wp_script_is($bootstrapjs, 'done' ) ) {
+	
 			 	// Enqueue bootstrap js
 				wp_enqueue_script( $bootstrapjs, str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js' ), array( 'jquery' ), '4.0.0', true );
 
 		 	}
+	
 		} 
+	
 	}
 
 	// Create the action links on the plugins page
 	public function gift_recorder_add_action_links() {
+	
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-add-action-links.php';
+	
 	}
 
 	public function gift_recorder_admin_pages() {
+	
 		include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-pages.php';
+	
 	}
 
 	/**
@@ -140,6 +157,9 @@ class Gift_Recorder_Admin {
 	* @since 1.0.0
 	*/
 	public function gift_recorder_settings_page() {
+	  
 	  include plugin_dir_path( __FILE__ ) . 'partials/gift-recorder-admin-display.php';
+	
 	}
+
 }
